@@ -1,6 +1,5 @@
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,15 +21,16 @@ public class Main {
         participants.add( schedulingApp.getPerson("Daniel@example.com"));
         participants.add( schedulingApp.getPerson("MichelleRamirez@deltek.com"));
 
-        schedulingApp.createMeeting("Deltek meeting1", participants, LocalDateTime.of(2024, Month.FEBRUARY,16, 12,0));
-        schedulingApp.createMeeting("Deltek meeting2", participants, LocalDateTime.of(2024, Month.FEBRUARY,17, 12,0));
+        LocalDateTime now = LocalDateTime.now();
+        schedulingApp.createMeeting("Deltek meeting1", participants, LocalDateTime.of(now.toLocalDate(), LocalTime.NOON).plusDays(2));
+        schedulingApp.createMeeting("Deltek meeting2", participants, LocalDateTime.of(now.toLocalDate(), LocalTime.NOON).plusDays(3));
 
-        LocalDateTime duplicationTime = LocalDateTime.of(2024, Month.FEBRUARY, 18, 12, 0);
+        LocalDateTime duplicationTime = LocalDateTime.of(now.toLocalDate(), LocalTime.NOON).plusDays(4);
         //Currently when a meeting is added the only requirement is that the time is rounded.
         schedulingApp.createMeeting("double meeting", participants, duplicationTime);
         schedulingApp.createMeeting("double meeting", participants, duplicationTime);
 
-        schedulingApp.createMeeting("Deltek meeting past", participants, LocalDateTime.of(2024, Month.FEBRUARY,11, 12,0));
+        schedulingApp.createMeeting("Deltek meeting past", participants, LocalDateTime.of(now.toLocalDate(), LocalTime.NOON).minusDays(1));
 
         LocalDateTime timeWhichAlsoSuggested = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.NOON).plusDays(1);
         schedulingApp.createMeeting("Time slot will also be suggested", participants, timeWhichAlsoSuggested);
@@ -61,10 +61,6 @@ public class Main {
             System.out.println("Time: " + time);
         }
 
-    }
-
-    private static LocalDateTime getStartTime() {
-        return LocalDateTime.of(2024, Month.FEBRUARY, 18, 12, 0);
     }
 
 }

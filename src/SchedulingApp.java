@@ -3,7 +3,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
 class SchedulingApp {
     private List<Person> persons;
@@ -57,7 +56,7 @@ class SchedulingApp {
         availableTimeSlots.add(LocalDateTime.of(now.toLocalDate(), LocalTime.NOON).plusDays(1));
         availableTimeSlots.add(LocalDateTime.now().withHour(15).withMinute(0).withSecond(0).withNano(0));
 
-        List<LocalDateTime> occupiedTime = new ArrayList<>();
+        Collection<LocalDateTime> occupiedTime = new ArrayList<>();
         for (Person person : participants) {
             for (Meeting meeting : person.getSchedule()) {
                 occupiedTime.add(meeting.getStartTime());
